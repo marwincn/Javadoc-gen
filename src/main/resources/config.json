@@ -1,0 +1,14 @@
+[
+  {
+    "projectName": "AdminSystem",
+    "projectUrl": "git@github.com:marwincn/AdminSystem.git",
+    "modules": [
+      {
+        "modulePath": "/src/main/java",
+        "packages": [
+          "cn.marwin"
+        ]
+      }
+    ]
+  }
+]
