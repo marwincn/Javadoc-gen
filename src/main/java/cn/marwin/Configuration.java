@@ -3,6 +3,8 @@ package cn.marwin;
 import cn.marwin.model.Project;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.Getter;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.InputStream;
@@ -10,7 +12,12 @@ import java.util.List;
 
 @Component
 public class Configuration {
+    @Getter
     private List<Project> projects;
+
+    @Getter
+    @Value("${file.location}")
+    private String fileLocation;
 
     public Configuration() {
         init();

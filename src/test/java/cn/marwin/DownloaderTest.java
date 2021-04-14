@@ -14,6 +14,6 @@ public class DownloaderTest {
         Downloader.download("git@github.com:marwincn/AdminSystem.git", dir);
         File file = new File(dir, "AdminSystem");
 
-        Assert.assertTrue(file.exists());
+        assertTrue(file.exists());
     }
 }

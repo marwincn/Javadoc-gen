@@ -10,23 +10,23 @@ public class CommandUtil {
     /**
      * 执行系统命令行
      *
-     * @param cmd 命令
+     * @param cmds 命令
      * @return 命令执行结果
      * @throws IOException 异常
      */
-    public static CommandResult exec(String cmd) throws IOException {
-        return exec(cmd, null);
+    public static CommandResult exec(String[] cmds) throws IOException {
+        return exec(cmds, null);
     }
 
     /**
      * 执行系统命令行
      *
-     * @param cmd 命令
+     * @param cmds 命令
      * @param dir 指定工作目录，null为主进程工作目录
      * @return 命令执行结果
      * @throws IOException 异常
      */
-    public static CommandResult exec(String cmd, File dir) throws IOException {
+    public static CommandResult exec(String cmds[], File dir) throws IOException {
         StringBuilder resultBuilder = new StringBuilder();
         StringBuilder errorBuilder = new StringBuilder();
 
@@ -36,7 +36,7 @@ public class CommandUtil {
 
         try {
             // 执行命令, 返回一个子进程对象（命令在子进程中执行）
-            process = Runtime.getRuntime().exec(cmd, null, dir);
+            process = Runtime.getRuntime().exec(cmds, null, dir);
 
             // 方法阻塞, 等待命令执行完成
             process.waitFor();
