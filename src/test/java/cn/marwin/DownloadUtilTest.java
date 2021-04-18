@@ -1,17 +1,17 @@
 package cn.marwin;
 
-import org.junit.Assert;
+import cn.marwin.util.DownloadUtil;
 import org.junit.Test;
 
 import java.io.File;
 
 import static org.junit.Assert.*;
 
-public class DownloaderTest {
+public class DownloadUtilTest {
     @Test
     public void download() throws Exception {
         String dir = "/Users/marwin/test/";
-        Downloader.download("git@github.com:marwincn/AdminSystem.git", dir);
+        DownloadUtil.download("git@github.com:marwincn/AdminSystem.git", dir);
         File file = new File(dir, "AdminSystem");
 
         assertTrue(file.exists());

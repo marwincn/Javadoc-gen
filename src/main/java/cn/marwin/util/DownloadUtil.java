@@ -1,8 +1,10 @@
-package cn.marwin;
+package cn.marwin.util;
+
+import cn.marwin.util.CommandUtil;
 
 import java.io.File;
 
-public class Downloader {
+public class DownloadUtil {
     public static void download(String url, String dir) throws Exception {
         File saveDir = new File(dir);
         // 创建下载目录

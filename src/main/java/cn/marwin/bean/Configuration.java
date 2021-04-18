@@ -1,10 +1,12 @@
-package cn.marwin;
+package cn.marwin.bean;
 
 import cn.marwin.model.Project;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.io.InputStream;
@@ -16,6 +18,7 @@ public class Configuration {
     private List<Project> projects;
 
     @Getter
+    @Setter
     @Value("${file.location}")
     private String fileLocation;
 

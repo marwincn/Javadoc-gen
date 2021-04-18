@@ -1,4 +1,4 @@
-package cn.marwin;
+package cn.marwin.util;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

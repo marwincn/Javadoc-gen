@@ -1,5 +1,6 @@
 package cn.marwin;
 
+import cn.marwin.util.CommandUtil;
 import org.junit.Assert;
 import org.junit.Test;
 

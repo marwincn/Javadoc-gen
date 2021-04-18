@@ -1,5 +1,6 @@
 package cn.marwin;
 
+import cn.marwin.bean.Generator;
 import junit.framework.TestCase;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,10 +12,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 public class GeneraterTest extends TestCase {
     @Autowired
-    Generater generater;
+    Generator generator;
 
     @Test
     public void testGenerate() throws Exception {
-        generater.generate();
+        generator.init();
     }
 }
