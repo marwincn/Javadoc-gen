@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.io.InputStream;
@@ -22,11 +21,10 @@ public class Configuration {
     @Value("${file.location}")
     private String fileLocation;
 
+    /**
+     * 读取自定义配置内容
+     */
     public Configuration() {
-        init();
-    }
-
-    private void init() {
         try {
             InputStream inputStream = getClass().getClassLoader().getResourceAsStream("config.json");
             ObjectMapper mapper = new ObjectMapper();

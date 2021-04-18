@@ -1,7 +1,5 @@
 package cn.marwin.util;
 
-import cn.marwin.util.CommandUtil;
-
 import java.io.File;
 
 public class DownloadUtil {

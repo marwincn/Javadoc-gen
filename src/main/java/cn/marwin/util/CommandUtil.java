@@ -26,7 +26,7 @@ public class CommandUtil {
      * @return 命令执行结果
      * @throws IOException 异常
      */
-    public static CommandResult exec(String cmds[], File dir) throws IOException {
+    public static CommandResult exec(String[] cmds, File dir) throws IOException {
         StringBuilder resultBuilder = new StringBuilder();
         StringBuilder errorBuilder = new StringBuilder();
 

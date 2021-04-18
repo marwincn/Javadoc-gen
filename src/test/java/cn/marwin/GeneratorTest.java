@@ -10,12 +10,12 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class GeneraterTest extends TestCase {
+public class GeneratorTest extends TestCase {
     @Autowired
     Generator generator;
 
     @Test
-    public void testGenerate() throws Exception {
+    public void testGenerate() {
         generator.init();
     }
 }
