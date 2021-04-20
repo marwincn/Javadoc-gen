@@ -1,7 +1,7 @@
 # 项目说明
 通过简单配置，然后运行项目就能打开一个Javadoc文档服务器。
 
-利用了 Spring Boot 跨平台的属性，只需要 JRE 就能在 Linux 、 Mac OS 和 Windows 直接运行。
+利用了 Spring Boot 跨平台的特性，只需要 JRE 就能在 Linux 、 Mac OS 和 Windows 直接运行。
 
 # 配置说明
 application.properties:
@@ -11,7 +11,7 @@ server.port=8888
 # 整个网页文件及下载的源码保存位置
 file.location=/Users/marwin/test
 
-# spring的配置以需要修改
+# spring的配置不需要修改
 spring.mvc.static-path-pattern=/**
 spring.resources.static-locations=file:${file.location}
 ```
