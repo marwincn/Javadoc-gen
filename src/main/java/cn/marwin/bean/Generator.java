@@ -4,6 +4,7 @@ import cn.marwin.model.Module;
 import cn.marwin.model.Project;
 import cn.marwin.util.CommandUtil;
 import cn.marwin.util.DownloadUtil;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Component;
@@ -27,6 +28,9 @@ public class Generator {
     @PostConstruct
     public void init() {
         try {
+            ObjectMapper mapper = new ObjectMapper();
+            System.out.println("Configuration: " + mapper.writeValueAsString(configuration));
+
             generate();
         } catch (Exception e) {
             e.printStackTrace();
@@ -48,28 +52,46 @@ public class Generator {
             DownloadUtil.download(project.getProjectUrl(), sourcePath);
 
             // 生成javadoc
-            if (project.getModules().size() == 1) { // 如果只有一个module，项目目录就是javadoc目录。路径为：projectName/index.html
-                Module module = project.getModules().get(0);
-                genModuleDoc(module, projectSrcPath, projectDocPath);
-            } else { // 如果有多个module，再项目目录下为每个module生成子目录。路径为：projectName/moduleName/index.html
-                // todo: 多个module的处理
+            genProjectDoc(project, projectDocPath, projectSrcPath);
+        }
+    }
+
+    private void genProjectDoc(Project project, Path projectDocPath, Path projectSrcPath) {
+        if (project.getModules().size() == 1) { // 如果只有一个module，项目目录就是javadoc目录。路径为：projectName/index.html
+            Module module = project.getModules().get(0);
+            Path moduleSourcePath = Paths.get(projectSrcPath.toString(), module.getModulePath());
+            genModuleDoc(projectDocPath, moduleSourcePath, module.getPackages());
+        } else { // 如果有多个module，再项目目录下为每个module生成子目录。路径为：projectName/moduleName/index.html
+            for (Module module : project.getModules()) {
+                Path moduleDocPath = Paths.get(projectDocPath.toString(), module.getModuleName());
+                Path moduleSourcePath = Paths.get(projectSrcPath.toString(), module.getModulePath());
+                genModuleDoc(moduleDocPath, moduleSourcePath, module.getPackages());
             }
         }
     }
 
-    private void genModuleDoc(Module module, Path projectSrcPath, Path projectDocPath) throws IOException {
-        Path moduleSourcePath = Paths.get(projectSrcPath.toString(), module.getModulePath());
-
+    /**
+     * 生成一个Module的Javadoc
+     *
+     * @param moduleDocPath Javadoc生成路径
+     * @param moduleSourcePath module源码路径
+     * @param packages module的packages
+     */
+    private void genModuleDoc(Path moduleDocPath, Path moduleSourcePath, List<String> packages) {
         String command = MessageFormat.format(
                 "javadoc -encoding utf-8 -charset utf-8 -d {0} -sourcepath {1} -subpackages {2}",
-                projectDocPath, moduleSourcePath, String.join(" ", module.getPackages()));
-        System.out.println("exec command: " + command);
-        CommandUtil.CommandResult result = CommandUtil.exec(command.split(" "));
+                moduleDocPath, moduleSourcePath, String.join(" ", packages));
+        try {
+            System.out.println("exec command: " + command);
+            CommandUtil.CommandResult result = CommandUtil.exec(command.split(" "));
 
-        if (!result.isSuccess()) {
-            System.out.println(result.getError());
-        } else {
-            System.out.println("generate javadoc success: " + result.getOutput());
+            if (!result.isSuccess()) {
+                System.out.println("generate javadoc fail: " + result.getError());
+            } else {
+                System.out.println("generate javadoc success: " + moduleDocPath);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
