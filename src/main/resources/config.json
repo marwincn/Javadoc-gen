@@ -1,7 +1,7 @@
 [
   {
-    "projectName": "AdminSystem",
-    "projectUrl": "git@github.com:marwincn/AdminSystem.git",
+    "projectName": "Javadoc-gen",
+    "projectUrl": "git@github.com:marwincn/Javadoc-gen.git",
     "modules": [
       {
         "moduleName": "main",

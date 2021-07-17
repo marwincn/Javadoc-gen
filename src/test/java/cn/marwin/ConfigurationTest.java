@@ -25,8 +25,8 @@ public class ConfigurationTest {
         newModule.setModulePath("/src/main/java");
         newModule.setPackages(Collections.singletonList("cn.marwin"));
         Project newProject = new Project();
-        newProject.setProjectName("AdminSystem");
-        newProject.setProjectUrl("git@github.com:marwincn/AdminSystem.git");
+        newProject.setProjectName("Javadoc-gen");
+        newProject.setProjectUrl("git@github.com:marwincn/Javadoc-gen.git");
         newProject.setModules(Collections.singletonList(newModule));
 
         Project project = projects.get(0);

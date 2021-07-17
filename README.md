@@ -11,7 +11,7 @@ server.port=8888
 # 整个网页文件及下载的源码保存位置
 file.location=/Users/marwin/test
 
-# spring的配置以需要修改
+# spring的配置不需要修改
 spring.mvc.static-path-pattern=/**
 spring.resources.static-locations=file:${file.location}
 ```
@@ -20,8 +20,8 @@ config.json:
 ```
 [  // 可以配置多个项目
   {
-    "projectName": "AdminSystem",                             // 项目名
-    "projectUrl": "git@github.com:marwincn/AdminSystem.git",  // 项目的git仓库路径
+    "projectName": "Javadoc-gen",                             // 项目名
+    "projectUrl": "git@github.com:marwincn/Javadoc-gen.git",  // 项目的git仓库路径
     "modules": [ // 每个项目可以配置多个module
       {
         "moduleName": "main",           // module名，可以任意取名
