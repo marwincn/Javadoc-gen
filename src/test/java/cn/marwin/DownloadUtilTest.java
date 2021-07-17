@@ -3,17 +3,19 @@ package cn.marwin;
 import cn.marwin.util.DownloadUtil;
 import org.junit.Test;
 
-import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 public class DownloadUtilTest {
     @Test
     public void download() throws Exception {
-        String dir = "/Users/marwin/test/";
+        Path dir = Paths.get("/Users/marwin/test/");
         DownloadUtil.download("git@github.com:marwincn/AdminSystem.git", dir);
-        File file = new File(dir, "AdminSystem");
+        Path file = Paths.get(dir.toString(), "AdminSystem");
 
-        assertTrue(file.exists());
+        assertTrue(Files.exists(file));
     }
 }
