@@ -1,11 +1,35 @@
 package cn.marwin;
 
+import cn.marwin.bean.Configuration;
+import cn.marwin.model.Module;
+import cn.marwin.model.Project;
+import org.junit.Assert;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import java.util.Collections;
+import java.util.List;
 
 public class ConfigurationTest {
     @Test
-    public void init() {
+    public void configuration() {
+        Configuration configuration = new Configuration();
+
+//        String fileLocation = configuration.getFileLocation();
+//        Assert.assertEquals(fileLocation, "/Users/marwin/test/");
+
+        List<Project> projects = configuration.getProjects();
+        Assert.assertEquals(projects.size(), 1);
+
+        Module newModule = new Module();
+        newModule.setModuleName("main");
+        newModule.setModulePath("/src/main/java");
+        newModule.setPackages(Collections.singletonList("cn.marwin"));
+        Project newProject = new Project();
+        newProject.setProjectName("AdminSystem");
+        newProject.setProjectUrl("git@github.com:marwincn/AdminSystem.git");
+        newProject.setModules(Collections.singletonList(newModule));
+
+        Project project = projects.get(0);
+        Assert.assertEquals(project, newProject);
     }
 }

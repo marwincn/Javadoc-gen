@@ -11,6 +11,9 @@ import org.springframework.stereotype.Component;
 import java.io.InputStream;
 import java.util.List;
 
+/**
+ * 读取用户的配置
+ */
 @Component
 public class Configuration {
     @Getter
@@ -21,10 +24,14 @@ public class Configuration {
     @Value("${file.location}")
     private String fileLocation;
 
+    public Configuration() {
+        init();
+    }
+
     /**
      * 读取自定义配置内容
      */
-    public Configuration() {
+    private void init() {
         try {
             InputStream inputStream = getClass().getClassLoader().getResourceAsStream("config.json");
             ObjectMapper mapper = new ObjectMapper();
