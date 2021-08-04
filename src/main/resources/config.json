@@ -2,6 +2,7 @@
   {
     "projectName": "Javadoc-gen",
     "projectUrl": "git@github.com:marwincn/Javadoc-gen.git",
+    "branch": "master",
     "modules": [
       {
         "moduleName": "main",

@@ -1,11 +1,12 @@
 package cn.marwin.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.List;
-import java.util.Objects;
 
 @Data
+@EqualsAndHashCode
 public class Project {
     /**
      * 仓库名
@@ -18,22 +19,12 @@ public class Project {
     private String projectUrl;
 
     /**
+     * 代码仓分支
+     */
+    private String branch;
+
+    /**
      * 需要生成Javadoc的module，一个支持多个module
      */
     private List<Module> modules;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Project project = (Project) o;
-        return Objects.equals(projectName, project.projectName) &&
-                Objects.equals(projectUrl, project.projectUrl) &&
-                Objects.equals(modules, project.modules);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(projectName, projectUrl, modules);
-    }
 }

@@ -27,6 +27,7 @@ public class ConfigurationTest {
         Project newProject = new Project();
         newProject.setProjectName("Javadoc-gen");
         newProject.setProjectUrl("git@github.com:marwincn/Javadoc-gen.git");
+        newProject.setBranch("master");
         newProject.setModules(Collections.singletonList(newModule));
 
         Project project = projects.get(0);

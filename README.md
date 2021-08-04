@@ -34,3 +34,10 @@ config.json:
   }
 ]
 ```
+
+# 运行
+配置好配置文件后，下载maven依赖，直接运行Application类中的main函数。等项目运行结束后登录浏览器访问: 
+
+* 单module：`http://localhost:8888/{projectName}/index.html`
+
+* 多module：`http://localhost:8888/{projectName}/{moduleName}/index.html`

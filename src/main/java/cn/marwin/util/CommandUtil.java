@@ -5,6 +5,7 @@ import lombok.Data;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.text.MessageFormat;
 
 public class CommandUtil {
     /**
@@ -27,6 +28,8 @@ public class CommandUtil {
      * @throws IOException 异常
      */
     public static CommandResult exec(String[] cmds, File dir) throws IOException {
+        printCommand(cmds, dir);
+
         StringBuilder resultBuilder = new StringBuilder();
         StringBuilder errorBuilder = new StringBuilder();
 
@@ -67,6 +70,11 @@ public class CommandUtil {
         }
 
         return new CommandResult(process.exitValue(), resultBuilder.toString(), errorBuilder.toString());
+    }
+
+    private static void printCommand(String[] cmds, File dir) throws IOException {
+        String cmdDir = dir == null ? System.getProperty("user.dir") : dir.getCanonicalPath();
+        System.out.println(MessageFormat.format("exec command: [{0}] {1}", cmdDir, String.join(" ", cmds)));
     }
 
     @Data

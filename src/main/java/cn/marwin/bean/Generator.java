@@ -49,7 +49,7 @@ public class Generator {
             Path projectDocPath = Paths.get(rootPath.toString(), project.getProjectName());
 
             // 下载源码，todo 如果源码已下载则执行git pull
-            DownloadUtil.download(project.getProjectUrl(), sourcePath);
+            DownloadUtil.download(project.getProjectUrl(), project.getBranch(), sourcePath);
 
             // 生成javadoc
             genProjectDoc(project, projectDocPath, projectSrcPath);
@@ -82,7 +82,6 @@ public class Generator {
                 "javadoc -encoding utf-8 -charset utf-8 -d {0} -sourcepath {1} -subpackages {2}",
                 moduleDocPath, moduleSourcePath, String.join(" ", packages));
         try {
-            System.out.println("exec command: " + command);
             CommandUtil.CommandResult result = CommandUtil.exec(command.split(" "));
 
             if (!result.isSuccess()) {

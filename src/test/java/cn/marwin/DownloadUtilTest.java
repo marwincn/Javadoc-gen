@@ -13,7 +13,7 @@ public class DownloadUtilTest {
     @Test
     public void download() throws Exception {
         Path dir = Paths.get("/Users/marwin/test/");
-        DownloadUtil.download("git@github.com:marwincn/Javadoc-gen.git", dir);
+        DownloadUtil.download("git@github.com:marwincn/Javadoc-gen.git", "master", dir);
         Path file = Paths.get(dir.toString(), "Javadoc-gen");
 
         assertTrue(Files.exists(file));
