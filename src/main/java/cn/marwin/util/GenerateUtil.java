@@ -5,6 +5,7 @@ import cn.marwin.model.Module;
 import cn.marwin.model.Project;
 
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.MessageFormat;
@@ -17,13 +18,16 @@ public class GenerateUtil {
         // 源码下载路径
         Path sourcePath = Paths.get(rootPath.toString(), "sources");
 
-        List<Project> projects = configuration.getProjects();
-        for (Project project : projects) {
+        for (Project project : configuration.getProjects()) {
             Path projectSrcPath = Paths.get(sourcePath.toString(), project.getProjectName());
             Path projectDocPath = Paths.get(rootPath.toString(), project.getProjectName());
 
-            // 下载源码，todo 如果源码已下载则执行git pull
-            DownloadUtil.download(project.getProjectUrl(), project.getBranch(), sourcePath);
+            // 下载源码，如果目录存在则更新代码
+            if (Files.exists(projectSrcPath)) {
+                CommandUtil.exec(new String[]{"git", "pull"}, projectSrcPath.toFile());
+            } else {
+                DownloadUtil.download(project.getProjectUrl(), project.getBranch(), sourcePath);
+            }
 
             // 生成javadoc
             genProjectDoc(project, projectDocPath, projectSrcPath);

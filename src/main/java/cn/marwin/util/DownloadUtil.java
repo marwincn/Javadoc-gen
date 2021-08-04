@@ -6,7 +6,8 @@ import java.nio.file.Path;
 
 public class DownloadUtil {
     public static void download(String url, String branch, Path dir) throws Exception {
-        if (!Files.exists(dir)) { // 目录不存在，创建下载目录
+        // 目录不存在，创建下载目录
+        if (!Files.exists(dir)) {
             Files.createDirectories(dir);
             System.out.println("Created dir: " + dir);
         }
