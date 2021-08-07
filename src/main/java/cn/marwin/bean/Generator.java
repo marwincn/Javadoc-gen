@@ -3,16 +3,14 @@ package cn.marwin.bean;
 import cn.marwin.util.GenerateUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 
 @Component
-@DependsOn("configuration")
 public class Generator {
     @Autowired
-    public Configuration configuration;
+    Configuration configuration;
 
     /**
      * 在Configuration注入完成后再执行

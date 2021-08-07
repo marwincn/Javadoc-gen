@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>index</title>
+</head>
+<body>
+    <div th:each="project:${projects}">
+        <p th:text="${project.projectName}">project</p>
+        <ul>
+            <li th:each="module:${project.modules}">
+                <a th:if="${project.modules.size() == 1}" th:href="'/' + ${project.projectName} + '/index.html'" th:text="${module.moduleName}">module</a>
+                <a th:if="${project.modules.size() > 1}" th:href="'/' + ${project.projectName} + '/' + ${module.moduleName} + '/index.html' + " th:text="${module.moduleName}">module</a>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>
