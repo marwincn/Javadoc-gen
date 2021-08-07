@@ -36,8 +36,20 @@ config.json:
 ```
 
 # 运行
+
 配置好配置文件后，下载maven依赖，直接运行Application类中的main函数。等项目运行结束后登录浏览器访问: 
 
 * 单module：`http://localhost:8888/{projectName}/index.html`
 
 * 多module：`http://localhost:8888/{projectName}/{moduleName}/index.html`
+
+也可以直接访问`http://localhost:8888`首页查看所有生成的JavaDoc目录。
+
+## 打包运行
+
+配置好配置文件后，在项目根目录执行`mvn clean package`打包项目，在target目录下得到`Javadoc-gen-1.0-SNAPSHOT.jar`文件；
+
+将jar包上传到环境，执行：
+```shell script
+nohup java -jar Javadoc-gen-1.0-SNAPSHOT.jar > Javadoc-gen.log &
+```
