@@ -23,6 +23,7 @@ public class Generator {
             System.out.println("Configuration: " + mapper.writeValueAsString(configuration));
 
             GenerateUtil.generate(configuration);
+            System.out.println("generate end");
         } catch (Exception e) {
             e.printStackTrace();
         }
