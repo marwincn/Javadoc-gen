@@ -2,6 +2,7 @@ package cn.marwin.util;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -30,59 +31,64 @@ public class CommandUtil {
     public static CommandResult exec(String[] cmds, File dir) throws IOException {
         printCommand(cmds, dir);
 
-        StringBuilder resultBuilder = new StringBuilder();
-        StringBuilder errorBuilder = new StringBuilder();
-
         Process process = null;
-        BufferedReader bufResult = null;
-        BufferedReader bufError = null;
+        PrintThread resultThread = null;
+        PrintThread errorThread = null;
         try {
             // 执行命令, 返回一个子进程对象（命令在子进程中执行）
             process = Runtime.getRuntime().exec(cmds, null, dir);
 
-            // 获取命令执行结果和错误
-            bufResult = new BufferedReader(new InputStreamReader(process.getInputStream(), StandardCharsets.UTF_8));
-            bufError = new BufferedReader(new InputStreamReader(process.getErrorStream(), StandardCharsets.UTF_8));
-
-            // 读取输出和错误
-            String line;
-            while ((line = bufResult.readLine()) != null) {
-                resultBuilder.append(line).append(System.lineSeparator());
-            }
-            while ((line = bufError.readLine()) != null) {
-                errorBuilder.append(line).append(System.lineSeparator());
-            }
+            // 另起线程获取输出和错误信息
+            resultThread = new PrintThread(process.getInputStream());
+            resultThread.start();
+            errorThread = new PrintThread(process.getErrorStream());
+            errorThread.start();
 
             // 方法阻塞, 等待命令执行完成
             process.waitFor();
         } catch (InterruptedException e) {
             e.printStackTrace();
-        } finally {
-            closeStream(bufResult);
-            closeStream(bufError);
-
-            // 销毁子进程
-            if (process != null) {
-                process.destroy();
-            }
         }
 
-        return new CommandResult(process.exitValue(), resultBuilder.toString(), errorBuilder.toString());
-    }
-
-    private static void closeStream(Closeable stream) {
-        try {
-            if (stream != null) {
-                stream.close();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        return new CommandResult(process.exitValue(), resultThread.getPrintRecords(), errorThread.getPrintRecords());
     }
 
     private static void printCommand(String[] cmds, File dir) throws IOException {
         String cmdDir = dir == null ? System.getProperty("user.dir") : dir.getCanonicalPath();
         System.out.println(MessageFormat.format("exec command: [{0}] {1}", cmdDir, String.join(" ", cmds)));
+    }
+
+    private static class PrintThread extends Thread {
+        @Getter
+        private volatile String printRecords = "";
+        private final InputStream inputStream;
+
+        public PrintThread(InputStream inputStream) {
+            this.inputStream = inputStream;
+        }
+
+        @Override
+        public void run() {
+            StringBuilder recordBuilder = new StringBuilder();
+            try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
+                // 读取流
+                String line;
+                while ((line = bufferedReader.readLine()) != null) {
+                    recordBuilder.append(line).append(System.lineSeparator());
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                // 关闭流
+                try {
+                    inputStream.close();
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+            }
+            // 存储流内容
+            printRecords = recordBuilder.toString();
+        }
     }
 
     @Data

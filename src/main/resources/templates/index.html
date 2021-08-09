@@ -10,7 +10,7 @@
         <ul>
             <li th:each="module:${project.modules}">
                 <a th:if="${project.modules.size() == 1}" th:href="'/' + ${project.projectName} + '/index.html'" th:text="${module.moduleName}">module</a>
-                <a th:if="${project.modules.size() > 1}" th:href="'/' + ${project.projectName} + '/' + ${module.moduleName} + '/index.html' + " th:text="${module.moduleName}">module</a>
+                <a th:if="${project.modules.size() > 1}" th:href="'/' + ${project.projectName} + '/' + ${module.moduleName} + '/index.html'" th:text="${module.moduleName}">module</a>
             </li>
         </ul>
     </div>
